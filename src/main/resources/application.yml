@@ -4,19 +4,11 @@ server:
     include-binding-errors: always
   port: 3000
 
-
 spring:
-  devtools:
-    livereload:
-      enabled: true
-  datasource:
-    username: ryednap
-    password: unico
-    url: jdbc:mysql://localhost:3306/WeCare
-
-
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop # testing
-    show-sql: true
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    show-sql: false
