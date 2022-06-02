@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/img/**", "/script/**", "/styles/**").permitAll()
                 .antMatchers("/", "/login/**", "/register/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/home/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/home/**").hasRole(Role.USER.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -40,7 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .defaultSuccessUrl("/home")
                     .failureForwardUrl("/login/error")
                 .and()
-                .logout();
+                .logout()
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/");
     }
 
     @Override

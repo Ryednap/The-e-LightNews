@@ -49,7 +49,6 @@ public class BingApi {
     public List<BingImage> searchImage(String query) throws IOException {
         OkHttpClient client = new OkHttpClient();
         query = query.replaceAll(" ", "%20");
-        System.out.println(query);
         Request request = new Request.Builder()
                 .url("https://bing-image-search1.p.rapidapi.com/images/search?q=%s&count=3".formatted(query))
                 .get()
