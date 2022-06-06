@@ -6,6 +6,7 @@ import com.example.newsapp.news.model.Bing.BingImage;
 import com.example.newsapp.news.model.Bing.BingNewsItems;
 import com.example.newsapp.news.model.NewsAPI.Articles;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Pair;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class HomeService {
     private final BingApi bingApi;
     private final NewsApi newsApi;
@@ -34,12 +36,15 @@ public class HomeService {
     @Async("asyncExec")
     public CompletableFuture<List<BingNewsItems>> getNews (int imageWidth, int imageHeight) {
         List<BingNewsItems> bingNewsItemsModels = bingApi.filterNews();
+
         System.out.println(Thread.currentThread().getId());
         return CompletableFuture.completedFuture(bingNewsItemsModels.stream().filter(bingNewsItemsModel -> {
                     Pair<Integer, Integer> dimension = null;
                     try {
                         dimension = getImageDimension(bingNewsItemsModel.getImage().getThumbnail().getUrl());
+                        System.out.println(dimension);
                     } catch (IOException e) {
+                        log.error("Exception while checking image dimension : " + e.getMessage());
                         throw new RuntimeException(e);
                     }
                     return dimension.getFirst() >= imageHeight && dimension.getSecond() >= imageWidth;

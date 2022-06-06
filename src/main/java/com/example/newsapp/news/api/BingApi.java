@@ -29,7 +29,7 @@ public class BingApi {
     private BingNews searchNews() throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://bing-news-search1.p.rapidapi.com/news?count=100&originalImg=true&safeSearch=Off&textFormat=Raw")
+                .url("https://bing-news-search1.p.rapidapi.com/news?count=100&&safeSearch=Off&textFormat=Raw")
                 .get()
                 .addHeader("X-BingApis-SDK", "true")
                 .addHeader("X-RapidAPI-Host", "bing-news-search1.p.rapidapi.com")

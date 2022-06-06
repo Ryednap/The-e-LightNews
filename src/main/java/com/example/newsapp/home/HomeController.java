@@ -19,7 +19,7 @@ public class HomeController {
     @GetMapping()
     public ModelAndView getHomePage() throws IOException, ExecutionException, InterruptedException {
         CompletableFuture<?> topHeadlines = homeService.getTopHeadlines();
-        CompletableFuture<?> news = homeService.getNews(300, 300);
+        CompletableFuture<?> news = homeService.getNews(100, 100);
 
         CompletableFuture.allOf(topHeadlines, news).join();
 
